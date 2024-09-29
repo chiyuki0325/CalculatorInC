@@ -2,7 +2,7 @@
 #define TYPES_H
 
 typedef union {
-    int number;
+    double number;
     char op;
 } Token;
 

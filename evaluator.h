@@ -1,3 +1,3 @@
 #include "types.h"
 
-int evaluate(TreeNode* root);
+double evaluate(TreeNode* root);

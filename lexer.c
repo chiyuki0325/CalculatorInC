@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <math.h>
 #include <string.h>
 #include "lexer.h"
 
@@ -15,7 +16,8 @@ ListNode* newTokenNode(
     return node;
 }
 
-int numberCache = 0;
+float numberCache = 0;
+short afterPoint = 0;
 
 ListNode* runLexer(
     char *expression
@@ -32,6 +34,8 @@ ListNode* runLexer(
             case IDLE:
                 if (currentChar == '(') {
                     /* 左括号 */
+                    numberCache = 0;
+                    afterPoint = 0;
                     currentNode->next = newTokenNode((Token){}, LEFT_BRACKET);
                     currentNode->next->prev = currentNode;
                     currentNode = currentNode->next;
@@ -43,8 +47,16 @@ ListNode* runLexer(
                     currentNode = currentNode->next;
                     state = BRACKETS;
                 } else if (isdigit(currentChar)) {
-                    /* 数字 */
-                    numberCache = currentChar - '0'; /* 数字字符的 ASCII 码减去 0 的 ASCII 码，得到数字本身 */
+                    /* 数字字符的 ASCII 码减去 0 的 ASCII 码，得到数字本身 */
+                    if (afterPoint > 0) {
+                        numberCache = numberCache + (currentChar - '0') * pow(10, -afterPoint);
+                        afterPoint++;
+                    } else {
+                        numberCache = numberCache * 10 + (currentChar - '0');
+                    }
+                    state = NUMBERS;
+                } else if (currentChar == '.') {
+                    afterPoint = 1;
                     state = NUMBERS;
                 } else if (
                     currentChar == '+' || 
@@ -54,6 +66,8 @@ ListNode* runLexer(
                     currentChar == '%'
                 ) {
                     /* 运算符 */
+                    numberCache = 0;
+                    afterPoint = 0;
                     currentNode->next = newTokenNode((Token){.op = currentChar}, OPERATOR);
                     currentNode->next->prev = currentNode;
                     currentNode = currentNode->next;
@@ -115,7 +129,7 @@ void printNodes(
     ListNode* currentNode = head->next;
     while (currentNode != NULL) {
         if (currentNode->type == NUMBER) {
-            printf("NUM: %d\n", currentNode->token.number);
+            printf("NUM: %g\n", currentNode->token.number);
         } else if (currentNode->type == OPERATOR) {
             printf("OPR: %c\n", currentNode->token.op);
         } else if (currentNode->type == LEFT_BRACKET) {

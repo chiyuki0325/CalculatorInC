@@ -19,16 +19,16 @@ ListNode* current;
 void printCurrent() {
     switch (current->type) {
         case NUMBER:
-            printf("NUMBER: %d\n", current->token.number);
+            printf("NUM: %g\n", current->token.number);
             break;
         case OPERATOR:
-            printf("OPERATOR: %c\n", current->token.op);
+            printf("OPR: %c\n", current->token.op);
             break;
         case LEFT_BRACKET:
-            printf("LEFT_BRACKET\n");
+            printf("LBR: (\n");
             break;
         case RIGHT_BRACKET:
-            printf("RIGHT_BRACKET\n");
+            printf("RBR: )\n");
             break;
         default:
             break;
@@ -102,7 +102,7 @@ void traversalPrint(TreeNode* root) {
     traversalPrint(root->left);
     switch (root->type) {
         case NUMBER:
-            printf("%d", root->token.number);
+            printf("%g", root->token.number);
             break;
         case OPERATOR:
             printf("%c", root->token.op);

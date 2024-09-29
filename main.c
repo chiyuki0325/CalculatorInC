@@ -10,7 +10,7 @@
 int main() {
     char expression[512]; /* 初始化缓冲区 */
 
-    printf("Please input an integer expression: ");
+    printf("Please input an expression: ");
     fgets(expression, 512, stdin); /* 从标准输入读取表达式 */
 
     /* 为了方便后续处理，给表达式末尾添加一个空格 */
@@ -35,7 +35,7 @@ int main() {
 
     /* 第三步：计算表达式 */
     traversalPrint(root);
-    printf(" = %d\n", evaluate(root));
+    printf(" = %g\n", evaluate(root));
     
     return 0;
 }

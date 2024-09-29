@@ -1,7 +1,7 @@
 objects = main.o lexer.o parser.o evaluator.o
 
 calculator : $(objects)
-	cc -o calculator $(objects)
+	cc -o calculator $(objects) -lm
 	rm $(objects)
 
 main.o : main.c lexer.h parser.h evaluator.h types.h
