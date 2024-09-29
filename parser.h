@@ -1,5 +1,8 @@
 #include "types.h"
 
 TreeNode* newTreeNode(Token token, TokenType type);
-TreeNode* parseExpression(ListNode* head);
+TreeNode* parseExpression();
+TreeNode* parseTerm();
+TreeNode* parseFactor();
+TreeNode* runParser(ListNode* head);
 void traversalPrint(TreeNode* root);

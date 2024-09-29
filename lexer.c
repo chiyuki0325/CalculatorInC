@@ -33,11 +33,13 @@ ListNode* runLexer(
                 if (currentChar == '(') {
                     /* 左括号 */
                     currentNode->next = newTokenNode((Token){}, LEFT_BRACKET);
+                    currentNode->next->prev = currentNode;
                     currentNode = currentNode->next;
                     state = BRACKETS;
                 } else if (currentChar == ')') {
                     /* 右括号 */
                     currentNode->next = newTokenNode((Token){}, RIGHT_BRACKET);
+                    currentNode->next->prev = currentNode;
                     currentNode = currentNode->next;
                     state = BRACKETS;
                 } else if (isdigit(currentChar)) {
@@ -47,6 +49,7 @@ ListNode* runLexer(
                 } else if (currentChar == '+' || currentChar == '-' || currentChar == '*' || currentChar == '/') {
                     /* 运算符 */
                     currentNode->next = newTokenNode((Token){.op = currentChar}, OPERATOR);
+                    currentNode->next->prev = currentNode;
                     currentNode = currentNode->next;
                     state = OPERATORS;
                 } else if (currentChar == ' ') {
@@ -62,6 +65,7 @@ ListNode* runLexer(
                     numberCache = numberCache * 10 + (currentChar - '0');
                 } else {
                     currentNode->next = newTokenNode((Token){.number = numberCache}, NUMBER);
+                    currentNode->next->prev = currentNode;
                     currentNode = currentNode->next;
                     state = IDLE;
                     position--;
@@ -90,6 +94,11 @@ ListNode* runLexer(
         }
         position++;
     }
+
+    /* 在尾部加一个空节点，以避免后续 parser 的空指针问题 */
+
+    currentNode->next = newTokenNode((Token){}, NONE);
+    currentNode->next->prev = currentNode;
 
     return head;
 }

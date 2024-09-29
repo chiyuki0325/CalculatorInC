@@ -14,10 +14,13 @@ typedef enum {
     NONE
 } TokenType;
 
-/* 单向链表 */
+/*
+ * 一开始写的是单向，但是写到 parser 时有后退的需求，所以改成了双向链表
+ */
 typedef struct ListNode {
     Token token;
     TokenType type;
+    struct ListNode* prev;
     struct ListNode* next;
 } ListNode;
 
