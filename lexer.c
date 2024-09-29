@@ -46,7 +46,13 @@ ListNode* runLexer(
                     /* 数字 */
                     numberCache = currentChar - '0'; /* 数字字符的 ASCII 码减去 0 的 ASCII 码，得到数字本身 */
                     state = NUMBERS;
-                } else if (currentChar == '+' || currentChar == '-' || currentChar == '*' || currentChar == '/') {
+                } else if (
+                    currentChar == '+' || 
+                    currentChar == '-' ||
+                    currentChar == '*' || 
+                    currentChar == '/' ||
+                    currentChar == '%'
+                ) {
                     /* 运算符 */
                     currentNode->next = newTokenNode((Token){.op = currentChar}, OPERATOR);
                     currentNode->next->prev = currentNode;
