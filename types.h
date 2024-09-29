@@ -1,24 +1,9 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-typedef struct {
-    int value;
-} Number;
-
-typedef enum {
-    PLUS,
-    MINUS,
-    MULTIPLY,
-    DIVIDE
-} OperatorType; 
-
-typedef struct {
-    OperatorType type;
-} Operator;
-
 typedef union {
-    Number number;
-    Operator op;
+    int number;
+    char op;
 } Token;
 
 typedef enum {

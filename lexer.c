@@ -46,7 +46,7 @@ ListNode* runLexer(
                     state = NUMBERS;
                 } else if (currentChar == '+' || currentChar == '-' || currentChar == '*' || currentChar == '/') {
                     /* 运算符 */
-                    currentNode->next = newTokenNode((Token){.op = {currentChar}}, OPERATOR);
+                    currentNode->next = newTokenNode((Token){.op = currentChar}, OPERATOR);
                     currentNode = currentNode->next;
                     state = OPERATORS;
                 } else if (currentChar == ' ') {
@@ -61,7 +61,7 @@ ListNode* runLexer(
                     /* 下一位还是数字 */
                     numberCache = numberCache * 10 + (currentChar - '0');
                 } else {
-                    currentNode->next = newTokenNode((Token){.number = {numberCache}}, NUMBER);
+                    currentNode->next = newTokenNode((Token){.number = numberCache}, NUMBER);
                     currentNode = currentNode->next;
                     state = IDLE;
                     position--;
@@ -100,9 +100,9 @@ void printNodes(
     ListNode* currentNode = head->next;
     while (currentNode != NULL) {
         if (currentNode->type == NUMBER) {
-            printf("NUM: %d\n", currentNode->token.number.value);
+            printf("NUM: %d\n", currentNode->token.number);
         } else if (currentNode->type == OPERATOR) {
-            printf("OPR: %c\n", currentNode->token.op.type);
+            printf("OPR: %c\n", currentNode->token.op);
         } else if (currentNode->type == LEFT_BRACKET) {
             printf("LBR: (\n");
         } else if (currentNode->type == RIGHT_BRACKET) {
