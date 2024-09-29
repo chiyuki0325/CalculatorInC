@@ -1,3 +1,6 @@
+#ifndef TYPES_H
+#define TYPES_H
+
 typedef struct {
     int value;
 } Number;
@@ -26,6 +29,7 @@ typedef enum {
     NONE
 } TokenType;
 
+/* 单向链表 */
 typedef struct ListNode {
     Token token;
     TokenType type;
@@ -39,9 +43,13 @@ typedef enum {
     BRACKETS
 } LexerState;
 
+/* 二叉树 */
 typedef struct TreeNode {
     Token token;
     TokenType type;
     struct TreeNode* left;
     struct TreeNode* right;
 } TreeNode;
+
+
+#endif
