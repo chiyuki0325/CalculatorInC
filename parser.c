@@ -63,10 +63,21 @@ TreeNode* parseTerm() {
     /* 解析乘法和除法表达式 */
     TreeNode* node = parseFactor();
     current = current->next;
-    while (current->type == OPERATOR && (current->token.op == '*' || current->token.op == '/')) {
+    while (current->type == OPERATOR && (
+        current->token.op == '*' || 
+        current->token.op == '/' ||
+        current->token.op == '%'
+        )) {
         TreeNode* operatorNode = newTreeNode(current->token, OPERATOR);
         operatorNode->left = node;
         operatorNode->right = parseFactor();
+        if (operatorNode->right->token.number == 0.0 && (
+            operatorNode->token.op == '/' ||
+            operatorNode->token.op == '%'
+        )) {
+            printf("ValueError: Division by zero\n");
+            return NULL;
+        }
         node = operatorNode;
         current = current->next;
     }

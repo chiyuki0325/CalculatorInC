@@ -1,7 +1,8 @@
 objects = main.o lexer.o parser.o evaluator.o
+CFLAGS = -Wall -O2
 
 calculator : $(objects)
-	cc -o calculator $(objects) -lm
+	$(CC) $(CFLAGS) -o calculator $(objects) -lm
 	rm $(objects)
 
 main.o : main.c lexer.h parser.h evaluator.h types.h

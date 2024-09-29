@@ -1,3 +1,4 @@
 .vscode/
 calculator
 *.o
+.ccls-cache/
