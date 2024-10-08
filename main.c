@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "types.h"
+#include "utils.h"
 #include "lexer.h"
 #include "parser.h"
 #include "evaluator.h"
@@ -35,7 +36,9 @@ int main() {
 
     /* 第三步：计算表达式 */
     traversalPrint(root);
-    printf(" = %g\n", evaluate(root));
+    printf(" = ");
+    printNum(evaluate(root));
+    printf("\n");
     
     return 0;
 }

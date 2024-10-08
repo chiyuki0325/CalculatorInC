@@ -1,4 +1,5 @@
 #include "types.h"
+#include "utils.h"
 
 TreeNode* newTreeNode(Token token, TokenType type);
 TreeNode* parseExpression();

@@ -125,7 +125,7 @@ void traversalPrint(TreeNode* root) {
     traversalPrint(root->left);
     switch (root->type) {
         case NUMBER:
-            printf("%g", root->token.number);
+            printNum(root->token.number);
             break;
         case OPERATOR:
             printf("%c", root->token.op);
