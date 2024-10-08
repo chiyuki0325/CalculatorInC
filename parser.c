@@ -62,6 +62,9 @@ TreeNode* parseFactor() {
 TreeNode* parseTerm() {
     /* 解析乘法和除法表达式 */
     TreeNode* node = parseFactor();
+    if (node == NULL) {
+        return NULL;
+    }
     current = current->next;
     while (current->type == OPERATOR && (
         current->token.op == '*' || 
@@ -71,6 +74,9 @@ TreeNode* parseTerm() {
         TreeNode* operatorNode = newTreeNode(current->token, OPERATOR);
         operatorNode->left = node;
         operatorNode->right = parseFactor();
+        if (operatorNode->right == NULL) {
+            return NULL;
+        }
         if (operatorNode->right->token.number == 0.0 && (
             operatorNode->token.op == '/' ||
             operatorNode->token.op == '%'
@@ -88,11 +94,17 @@ TreeNode* parseTerm() {
 TreeNode* parseExpression() {
     /* 解析加法和减法表达式，类似 parseTerm，不过上升了一个优先级 */
     TreeNode* node = parseTerm();
+    if (node == NULL) {
+        return NULL;
+    }
     current = current->next;
     while (current->type == OPERATOR && (current->token.op == '+' || current->token.op == '-')) {
         TreeNode* operatorNode = newTreeNode(current->token, OPERATOR);
         operatorNode->left = node;
         operatorNode->right = parseTerm();
+        if (operatorNode->right == NULL) {
+            return NULL;
+        }
         current = current->next;
         node = operatorNode;    
     }
